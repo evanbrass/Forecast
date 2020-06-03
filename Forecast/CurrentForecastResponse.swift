@@ -54,6 +54,11 @@
 
 import Foundation
 
+struct City {
+    let name: String
+    let coord: (lat: Double, lon: Double)
+}
+
 struct TemperatureInfo: Codable {
     let temp: Double
     let feelsLike: Double
