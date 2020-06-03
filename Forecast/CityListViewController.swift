@@ -40,7 +40,8 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Specify the place data types to return.
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
-            UInt(GMSPlaceField.placeID.rawValue))!
+                                                         UInt(GMSPlaceField.placeID.rawValue) |
+                                                        UInt(GMSPlaceField.addressComponents.rawValue))!
         autocompleteController.placeFields = fields
         
         // Specify a filter.
@@ -71,20 +72,48 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ForecastTableViewCell.reuseID, for: indexPath) as! ForecastTableViewCell
-        cell.cityNameLabel?.text = cityProvider.cities[indexPath.row].name
+        let city = cityProvider.cities[indexPath.row]
+        cell.cityNameLabel?.text = "\(city.name), \(city.state ?? "")"
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return ForecastTableViewCell.preferredHeight
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let city = cityProvider.cities[indexPath.row]
+            cityProvider.deleteCity(city)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
 }
 
 extension CityListViewController: GMSAutocompleteViewControllerDelegate {
     
+    // TODO:Evan in a business rules class?
+    func stateCodeForPlace(_ place: GMSPlace) -> String? {
+        var code: String? = nil
+        
+        if let components = place.addressComponents, components.count > 0 {
+            if let state = components.first(where: { $0.types.contains(kGMSPlaceTypeAdministrativeAreaLevel1)}) {
+                code = state.shortName ?? state.name
+            } else if let country = components.first(where: { $0.types.contains(kGMSPlaceTypeCountry)}) {
+                code = country.shortName ?? country.name
+            } else {
+                code = components.last?.shortName ?? components.last?.name
+            }
+        }
+        return code
+    }
+    
     // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        let newCity = City(name: place.name ?? "unknown", lat:place.coordinate.latitude, lon: place.coordinate.longitude)
+        let newCity = City(name: place.name ?? "unknown",
+                           state: stateCodeForPlace(place),
+                           lat:place.coordinate.latitude,
+                           lon: place.coordinate.longitude)
         if !cityProvider.addCity(newCity) {
             // TODO:Evan warn user it's already added, possible not dismiss, so they can keep searching??
         }
@@ -101,15 +130,5 @@ extension CityListViewController: GMSAutocompleteViewControllerDelegate {
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
     }
-    
-    // Turn the network activity indicator on and off again.
-    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-    }
-    
-    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-    }
-    
 }
 

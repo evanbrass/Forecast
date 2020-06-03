@@ -17,9 +17,9 @@ protocol CityProviderProtocol {
 
 class CitiesProvider: CityProviderProtocol {
     private(set) var cities: [City] = [
-        City(name: "Louisville", lat: 38.25, lon: -85.76)
+        City(name: "Louisville", state: "KY", lat: 38.25, lon: -85.76)
     ]
-    private var cityNames: Set<String> = ["Louisville"] // Used to keep track of duplicates
+    private var cityHash: Set<City> = [] // Used to keep track of duplicates
     private let defaultsCityKey = "cities"
     
     init() {
@@ -28,7 +28,7 @@ class CitiesProvider: CityProviderProtocol {
             let decoded = try? JSONDecoder().decode([City].self, from: cityData) {
             
             cities = decoded
-            cityNames = Set(cities.map({$0.name}))
+            cityHash = Set(cities)
         }
     }
     
@@ -39,18 +39,18 @@ class CitiesProvider: CityProviderProtocol {
     }
     
     func addCity(_ city: City) -> Bool {
-        guard !cityNames.contains(city.name) else {
+        guard !cityHash.contains(city) else {
             // TODO:Evan throw? bool might be good enough
             return false
         }
         cities.append(city)
-        cityNames.insert(city.name)
+        cityHash.insert(city)
         saveData()
         return true
     }
     
     func deleteCity(_ city: City) {
-        cityNames.remove(city.name)
+        cityHash.remove(city)
         if let removeIndex = cities.firstIndex(where: {$0.name == city.name}) {
             cities.remove(at: removeIndex)
         }

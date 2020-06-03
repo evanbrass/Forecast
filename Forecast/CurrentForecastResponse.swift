@@ -55,8 +55,9 @@
 import Foundation
 import CoreLocation
 
-struct City: Codable {
+struct City: Codable, Equatable, Hashable {
     let name: String
+    let state: String?
     let lat: Double
     let lon: Double
 

@@ -58,8 +58,9 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ForecastTableViewCell.reuseID, for: indexPath) as? ForecastTableViewCell else {
             return UITableViewCell()
         }
+        let city = cityService.cities[indexPath.row]
+        cell.cityNameLabel?.text = "\(city.name), \(city.state ?? "")"
         
-        cell.cityNameLabel.text = cityService.cities[indexPath.row].name
         return cell
     }
     
