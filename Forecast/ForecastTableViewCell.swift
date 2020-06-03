@@ -10,6 +10,7 @@ import UIKit
 
 class ForecastTableViewCell: UITableViewCell {
     static let preferredHeight: CGFloat = 50
+    static let reuseID = "ForecastTableViewCell"
     
     @IBOutlet weak var cityNameLabel: UILabel!
     

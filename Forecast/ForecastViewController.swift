@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityListViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
-    let dataService = DataService() // TODO:Evan inject
+    var cityService: CityProviderProtocol! // TODO:Evan inject
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +24,12 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         
         // TableView
         tableView.register(UINib(nibName: "ForecastTableViewCell", bundle: .main),
-                                forCellReuseIdentifier: "ForecastTableViewCell")
+                           forCellReuseIdentifier: ForecastTableViewCell.reuseID)
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    // MARK: - Actions
 
     @IBAction func currentButtonAction(_ sender: Any) {
         
@@ -38,23 +40,26 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func citiesButtonAction(_ sender: Any) {
-        let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "CityListViewController")
-        navigationController?.pushViewController(viewController, animated: true)
+        
+        if let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "CityListViewController") as? CityListViewController {
+            viewController.cityProvider = cityService
+            viewController.delegate = self
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
-    
     
     // MARK: - UITableViewDelegate / DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataService.cities.count
+        return cityService.cities.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastTableViewCell", for: indexPath) as? ForecastTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ForecastTableViewCell.reuseID, for: indexPath) as? ForecastTableViewCell else {
             return UITableViewCell()
         }
         
-        cell.cityNameLabel.text = dataService.cities[indexPath.row].name
+        cell.cityNameLabel.text = cityService.cities[indexPath.row].name
         return cell
     }
     
@@ -62,5 +67,11 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         return ForecastTableViewCell.preferredHeight
     }
     
-
+    // MARK: - CityListViewControllerDelegate
+    
+    func cityListViewControllerDidFinish(dataService: CityProviderProtocol) {
+        self.cityService = dataService
+        tableView.reloadData()
+    }
 }
+

@@ -53,10 +53,16 @@
  */
 
 import Foundation
+import CoreLocation
 
-struct City {
+struct City: Codable {
     let name: String
-    let coord: (lat: Double, lon: Double)
+    let lat: Double
+    let lon: Double
+
+    var coord: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: lat, longitude: lon)
+    }
 }
 
 struct TemperatureInfo: Codable {
