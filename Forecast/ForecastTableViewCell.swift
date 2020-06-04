@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ForecastTableViewCell: UITableViewCell {
     static let preferredHeight: CGFloat = 80
     static let reuseID = "ForecastTableViewCell"
 
+    @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var hStack: UIStackView!
@@ -39,7 +41,9 @@ class ForecastTableViewCell: UITableViewCell {
             }
             if let temp = forecast?.info.temp {
                 DispatchQueue.main.async {
-                    self?.temperatureLabel.text = "\(Int(temp))º"
+                    self?.temperatureLabel.text = "\(Int(temp))"
+                    // TODO:Evan need a function to determine weather it's daytime or nightime in city
+                    self?.iconImageView.sd_setImage(with: forecast?.weather.first?.iconURL, completed: nil)
                 }
             }
         }

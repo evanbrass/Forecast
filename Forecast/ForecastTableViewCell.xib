@@ -20,17 +20,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ioB-g5-EOV">
-                                <rect key="frame" x="0.0" y="0.0" width="270" height="53"/>
+                                <rect key="frame" x="0.0" y="0.0" width="245" height="53"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="33u-cL-0M2" userLabel="Temp Label">
-                                <rect key="frame" x="270" y="0.0" width="50" height="53"/>
+                                <rect key="frame" x="245" y="0.0" width="50" height="53"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="j6z-Ud-8pf">
+                                <rect key="frame" x="295" y="0.0" width="25" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="5f5-lq-6Fd"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -45,6 +51,7 @@
             <connections>
                 <outlet property="cityNameLabel" destination="ioB-g5-EOV" id="6fg-Lu-SYh"/>
                 <outlet property="hStack" destination="gwD-T1-C8S" id="jZt-Xn-udU"/>
+                <outlet property="iconImageView" destination="j6z-Ud-8pf" id="sAc-vm-nHk"/>
                 <outlet property="temperatureLabel" destination="33u-cL-0M2" id="ZGo-3q-UHp"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="155.69196428571428"/>

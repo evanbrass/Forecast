@@ -2,19 +2,25 @@ PODS:
   - GoogleMaps/Base (3.9.0)
   - GooglePlaces (3.9.0):
     - GoogleMaps/Base (= 3.9.0)
+  - SDWebImage (5.8.0):
+    - SDWebImage/Core (= 5.8.0)
+  - SDWebImage/Core (5.8.0)
 
 DEPENDENCIES:
   - GooglePlaces
+  - SDWebImage (~> 5.0)
 
 SPEC REPOS:
   trunk:
     - GoogleMaps
     - GooglePlaces
+    - SDWebImage
 
 SPEC CHECKSUMS:
   GoogleMaps: 4b5346bddfe6911bb89155d43c903020170523ac
   GooglePlaces: 1634d019549b969d40fe0ccb0b9513055adebe01
+  SDWebImage: 84000f962cbfa70c07f19d2234cbfcf5d779b5dc
 
-PODFILE CHECKSUM: 78a6242d92a7ba5da11064afa87c8ce566b7e002
+PODFILE CHECKSUM: 72e127300916096365cde91a2322c212e953fed6
 
 COCOAPODS: 1.8.4
