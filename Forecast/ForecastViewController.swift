@@ -15,6 +15,12 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if cityService.cities.count > 0 {
+            let f = ForecastService()
+            f.getCurrentForecastForCity(cityService.cities[0]) { (response, error) in
+                // TODO:Evan handle
+            }
+        }
         setupUI()
     }
 
@@ -60,7 +66,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         }
         let city = cityService.cities[indexPath.row]
         cell.cityNameLabel?.text = "\(city.name), \(city.state ?? "")"
-        
+
         return cell
     }
     

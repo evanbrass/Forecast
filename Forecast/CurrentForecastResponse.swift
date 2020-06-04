@@ -84,8 +84,7 @@ struct WeatherInfo: Codable {
 struct CurrentForecastResponse: Codable {
     let info: TemperatureInfo
     let cityName: String
-    let weather: WeatherInfo
-    
+    let weather: [WeatherInfo]
     private enum CodingKeys: String, CodingKey {
         case info = "main"
         case cityName = "name"
