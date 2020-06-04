@@ -41,7 +41,8 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
         // Specify the place data types to return.
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
                                                          UInt(GMSPlaceField.placeID.rawValue) |
-                                                        UInt(GMSPlaceField.addressComponents.rawValue))!
+                                                        UInt(GMSPlaceField.addressComponents.rawValue) |
+            UInt(GMSPlaceField.coordinate.rawValue))!
         autocompleteController.placeFields = fields
         
         // Specify a filter.

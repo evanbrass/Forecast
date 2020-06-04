@@ -10,18 +10,17 @@ import UIKit
 
 class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityListViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
-    var cityService: CityProviderProtocol! // TODO:Evan inject
+    var cityService: CityProviderProtocol!
+    let foreCastService = ForecastService() // TODO:Evan inject
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        if cityService.cities.count > 0 {
-            let f = ForecastService()
-            f.getCurrentForecastForCity(cityService.cities[0]) { (response, error) in
-                // TODO:Evan handle
-            }
-        }
         setupUI()
+//        foreCastService.getCurrentForecastForCity(cityService.cities[0]) { (forecast, error) in
+//            if error != nil {
+//                fatalError()
+//            }
+//        }
     }
 
     private func setupUI() {
@@ -65,8 +64,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
             return UITableViewCell()
         }
         let city = cityService.cities[indexPath.row]
-        cell.cityNameLabel?.text = "\(city.name), \(city.state ?? "")"
-
+        cell.configureWithCity(city: city, forecastService: foreCastService)
         return cell
     }
     

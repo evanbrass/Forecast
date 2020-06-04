@@ -21,8 +21,7 @@ class ForecastService {
 
     func getCurrentForecastForCity(_ city: City, completion: @escaping GetCurrentForecastCompletion) {
         // TODO:Evan make this a function to return a URL
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city.name)&appid=\(appID)&units=\(tempUnit.rawValue)"
-        
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(Float(city.lat))&lon=\(Float(city.lon))&appid=\(appID)&units=\(tempUnit.rawValue)"
 
         guard let url = URL(string: urlString) else {
             // TODO:Evan throw exception that we failed because of bad url
@@ -31,17 +30,17 @@ class ForecastService {
         }
         
         // TODO:Evan check cache
-        if let cached = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
-            do {
-                let decodedData = try JSONDecoder().decode(CurrentForecastResponse.self, from: cached.data)
-                completion(decodedData, nil)
-            } catch let error {
-                // TODO:evan custom error
-                print(error.localizedDescription)
-                completion(nil, error)
-            }
-            return
-        }
+//        if let cached = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
+//            do {
+//                let decodedData = try JSONDecoder().decode(CurrentForecastResponse.self, from: cached.data)
+//                completion(decodedData, nil)
+//            } catch let error {
+//                // TODO:evan custom error
+//                print(error.localizedDescription)
+//                completion(nil, error)
+//            }
+//            return
+//        }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard error == nil else {

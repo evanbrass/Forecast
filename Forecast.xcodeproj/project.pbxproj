@@ -21,6 +21,7 @@
 		655C5BCE2486E98100015EFA /* CurrentForecastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C5BCD2486E98100015EFA /* CurrentForecastResponse.swift */; };
 		655C5BD0248708FF00015EFA /* CitiesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655C5BCF248708FF00015EFA /* CitiesProvider.swift */; };
 		6566F77024886CB5001445D3 /* ForecastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6566F76F24886CB5001445D3 /* ForecastService.swift */; };
+		6566F7742488AA8D001445D3 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6566F7732488AA8D001445D3 /* Styles.swift */; };
 		CC1547C3310EDC5E0469A13D /* Pods_ForecastTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5424F4DB96A252EF2EEB012 /* Pods_ForecastTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		655C5BCD2486E98100015EFA /* CurrentForecastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentForecastResponse.swift; sourceTree = "<group>"; };
 		655C5BCF248708FF00015EFA /* CitiesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesProvider.swift; sourceTree = "<group>"; };
 		6566F76F24886CB5001445D3 /* ForecastService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastService.swift; sourceTree = "<group>"; };
+		6566F7732488AA8D001445D3 /* Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		71FF068767F4CCAEECCB01A8 /* Pods-Forecast.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Forecast.release.xcconfig"; path = "Target Support Files/Pods-Forecast/Pods-Forecast.release.xcconfig"; sourceTree = "<group>"; };
 		936D6440B024190F5445688B /* Pods-Forecast.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Forecast.debug.xcconfig"; path = "Target Support Files/Pods-Forecast/Pods-Forecast.debug.xcconfig"; sourceTree = "<group>"; };
 		B25990168CD84DAEE5CEE24B /* Pods-ForecastTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ForecastTests.release.xcconfig"; path = "Target Support Files/Pods-ForecastTests/Pods-ForecastTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				655C5BCD2486E98100015EFA /* CurrentForecastResponse.swift */,
 				655C5BCF248708FF00015EFA /* CitiesProvider.swift */,
 				6566F76F24886CB5001445D3 /* ForecastService.swift */,
+				6566F7732488AA8D001445D3 /* Styles.swift */,
 				655C5BB12486BDF600015EFA /* Main.storyboard */,
 				655C5BB42486BDF900015EFA /* Assets.xcassets */,
 				655C5BB62486BDF900015EFA /* LaunchScreen.storyboard */,
@@ -319,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6566F77024886CB5001445D3 /* ForecastService.swift in Sources */,
+				6566F7742488AA8D001445D3 /* Styles.swift in Sources */,
 				655C5BB02486BDF600015EFA /* CityListViewController.swift in Sources */,
 				655C5BCE2486E98100015EFA /* CurrentForecastResponse.swift in Sources */,
 				655C5BAC2486BDF600015EFA /* AppDelegate.swift in Sources */,
