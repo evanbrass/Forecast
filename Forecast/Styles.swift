@@ -11,6 +11,7 @@ import UIKit
 enum FontSize: Int {
     case title = 28
     case large = 18
+    case small = 10
     
     var cgFloatValue: CGFloat {
         return CGFloat(self.rawValue)

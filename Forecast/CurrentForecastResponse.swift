@@ -87,6 +87,7 @@ struct WeatherInfo: Codable {
     }
 }
 
+// TODO:Evan remove
 struct CurrentForecastResponse: Codable {
     let info: TemperatureInfo
     let cityName: String

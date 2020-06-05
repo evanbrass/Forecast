@@ -54,20 +54,16 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lmU-gl-ubd">
                                         <rect key="frame" x="0.0" y="714" width="414" height="60"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C84-wO-oBb">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="60"/>
-                                                <state key="normal" title="Current"/>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KQP-kS-Zzw">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
+                                                <segments>
+                                                    <segment title="Current"/>
+                                                    <segment title="Hourly"/>
+                                                </segments>
                                                 <connections>
-                                                    <action selector="toggleHourlyAction" destination="BYZ-38-t0r" eventType="touchUpInside" id="jsE-Mh-UBs"/>
+                                                    <action selector="segmentedControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Kkv-8y-NLZ"/>
                                                 </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMa-l4-oJZ">
-                                                <rect key="frame" x="207" y="0.0" width="207" height="60"/>
-                                                <state key="normal" title="Hourly"/>
-                                                <connections>
-                                                    <action selector="toggleHourlyAction" destination="BYZ-38-t0r" eventType="touchUpInside" id="3FL-Jy-P9w"/>
-                                                </connections>
-                                            </button>
+                                            </segmentedControl>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="kPH-g2-GDc"/>
@@ -87,8 +83,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ZX6-7I-S5O"/>
                     <connections>
-                        <outlet property="currentButton" destination="C84-wO-oBb" id="ahH-fX-Y7I"/>
-                        <outlet property="hourlyButton" destination="cMa-l4-oJZ" id="aGI-lc-JDI"/>
+                        <outlet property="segmentedControl" destination="KQP-kS-Zzw" id="SEy-Cc-4F6"/>
                         <outlet property="tableView" destination="Rws-G7-0n5" id="rUe-nk-3Tp"/>
                     </connections>
                 </viewController>

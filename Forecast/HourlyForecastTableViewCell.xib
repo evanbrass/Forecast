@@ -42,6 +42,7 @@
             <connections>
                 <outlet property="cityNameLabel" destination="53w-k7-t5W" id="Gbh-2O-nMz"/>
                 <outlet property="forecastStack" destination="n39-DX-dg2" id="jtL-TG-IlW"/>
+                <outlet property="mainStack" destination="X01-9s-jNX" id="NLu-Ao-qDY"/>
             </connections>
             <point key="canvasLocation" x="139" y="153"/>
         </tableViewCell>

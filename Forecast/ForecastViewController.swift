@@ -10,18 +10,22 @@ import UIKit
 
 class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityListViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var currentButton: UIButton!
-    @IBOutlet weak var hourlyButton: UIButton!
-    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+
     var cityService: CityProviderProtocol! // TODO:Evan these will go on the view model most likely
     let forecastService = ForecastService() // TODO:Evan inject
     
     // TODO:Evan read/write to user defaults
-    private var isHourly: Bool = true // TODO: set with buttons
+    private var isHourly: Bool = false {
+        didSet {
+            UserDefaults.standard.set(isHourly, forKey: "isHourly")
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         forecastService.clearCache()
+        isHourly = UserDefaults.standard.bool(forKey: "isHourly")
         setupUI()
     }
     
@@ -45,22 +49,13 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     
     private func refreshUI() {
         tableView.reloadData()
-        // highlight button
-        highlightButton(hourlyButton, highlighted: isHourly)
-        highlightButton(currentButton, highlighted: !isHourly)
+        segmentedControl.selectedSegmentIndex = isHourly ? 1 : 0
     }
-    
-    // TODO:Evan move?
-    private func highlightButton(_ button: UIButton, highlighted: Bool) {
-        button.backgroundColor = highlighted ? .blue : .white
-        button.setTitleColor(highlighted ? .white : .blue, for: .normal)
-    }
-    
+
     // MARK: - Actions
 
-    @IBAction func toggleHourlyAction() {
-        // TODO:Evan - make this one action
-        isHourly = !isHourly
+    @IBAction func segmentedControlChanged(_ sender: UISegmentedControl) {
+        isHourly = sender.selectedSegmentIndex == 1
         refreshUI()
     }
 
@@ -105,7 +100,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return ForecastTableViewCell.preferredHeight
+        return isHourly ? HourlyForecastTableViewCell.preferredHeight : ForecastTableViewCell.preferredHeight
     }
     
     // MARK: - CityListViewControllerDelegate
