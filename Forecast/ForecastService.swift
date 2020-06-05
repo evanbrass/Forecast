@@ -43,42 +43,39 @@ class ForecastService {
             return
         }
         
-        // Cache
+        // Return cache if exists
         if let cached = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
             do {
                 let decodedData = try JSONDecoder().decode(HourlyForecastResponse.self, from: cached.data)
                 completion(decodedData, nil)
-            } catch let error {
-                // TODO:evan re-fetch
-                print(error.localizedDescription)
-                completion(nil, error)
-            }
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard error == nil else {
-                // TODO:Evan handle
-                assertionFailure(error!.localizedDescription)
+            } catch {
+                // continue to fetch
                 return
             }
-            
-            if let data = data {
-                do {
-                    let forecast = try JSONDecoder().decode(HourlyForecastResponse.self, from: data)
-                    completion(forecast, nil)
-                } catch let error {
-                    // TODO:evan custom error
-                    print(error.localizedDescription)
-                    completion(nil, error)
+        } else {
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard error == nil else {
+                    // TODO:Evan handle
+                    assertionFailure(error!.localizedDescription)
+                    return
                 }
-            } else {
-                // TODO:Evan handle
-                print("something went wrong, there's no data")
-                assertionFailure()
-            }
-        }.resume()
-        
+                
+                if let data = data {
+                    do {
+                        let forecast = try JSONDecoder().decode(HourlyForecastResponse.self, from: data)
+                        completion(forecast, nil)
+                    } catch let error {
+                        // TODO:evan custom error
+                        print(error.localizedDescription)
+                        completion(nil, error)
+                    }
+                } else {
+                    // TODO:Evan handle
+                    print("something went wrong, there's no data")
+                    assertionFailure()
+                }
+            }.resume()
+        }
     }
 
     func getCurrentForecastForCity(_ city: City, completion: @escaping GetCurrentForecastCompletion) {

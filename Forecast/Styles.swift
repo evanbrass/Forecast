@@ -9,8 +9,10 @@
 import UIKit
 
 enum FontSize: Int {
+    case yuge = 100
     case title = 28
     case large = 18
+    case medium = 14
     case small = 10
     
     var cgFloatValue: CGFloat {

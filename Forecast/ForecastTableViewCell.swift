@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     static let preferredHeight: CGFloat = 80
@@ -33,11 +32,9 @@ class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     func configureWithForecast(_ forecast: HourlyForecastResponse) {
         temperatureLabel.text = "\(Int(forecast.current.temp))"
         iconImageView.image = forecast.current.weather.first?.image
-//        iconImageView.sd_setImage(with: forecast.current.weather.first?.iconURL, completed: nil)
     }
 
     override func prepareForReuse() {
-        // TODO:Evan Cancel download task
         temperatureLabel.text = nil
     }
 

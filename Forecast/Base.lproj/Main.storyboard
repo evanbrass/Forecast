@@ -91,6 +91,70 @@
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="137.94642857142856"/>
         </scene>
+        <!--Forecast Detail View Controller-->
+        <scene sceneID="tUh-Bz-dud">
+            <objects>
+                <viewController storyboardIdentifier="ForecastDetailViewController" id="x2Y-uG-Hw3" customClass="ForecastDetailViewController" customModule="Forecast" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GMN-r0-KDV">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SHA-D2-mGW">
+                                <rect key="frame" x="16" y="44" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="OxJ-kj-tdO"/>
+                                    <constraint firstAttribute="height" constant="45" id="TEV-zg-UVg"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backButtonAction:" destination="x2Y-uG-Hw3" eventType="touchUpInside" id="5Dp-MG-iUM"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yKK-yb-tIv">
+                                <rect key="frame" x="0.0" y="89" width="414" height="61.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hq8-zl-voU" userLabel="Title Label">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rk1-YD-XHy">
+                                        <rect key="frame" x="0.0" y="20.5" width="414" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjn-yV-s7i">
+                                        <rect key="frame" x="0.0" y="41" width="414" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cuR-NL-Odf" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yKK-yb-tIv" secondAttribute="bottom" id="N63-Ir-aCI"/>
+                            <constraint firstItem="SHA-D2-mGW" firstAttribute="top" secondItem="cuR-NL-Odf" secondAttribute="top" id="QgB-mJ-Dih"/>
+                            <constraint firstItem="SHA-D2-mGW" firstAttribute="leading" secondItem="cuR-NL-Odf" secondAttribute="leading" constant="16" id="YgF-b8-KVF"/>
+                            <constraint firstItem="yKK-yb-tIv" firstAttribute="top" secondItem="SHA-D2-mGW" secondAttribute="bottom" id="au5-UC-ehl"/>
+                            <constraint firstItem="cuR-NL-Odf" firstAttribute="trailing" secondItem="yKK-yb-tIv" secondAttribute="trailing" id="xme-fk-hLY"/>
+                            <constraint firstItem="yKK-yb-tIv" firstAttribute="leading" secondItem="cuR-NL-Odf" secondAttribute="leading" id="zTf-rq-6tk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cuR-NL-Odf"/>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="Rk1-YD-XHy" id="zxF-8g-dIs"/>
+                        <outlet property="tempLabel" destination="yjn-yV-s7i" id="PUq-li-Vob"/>
+                        <outlet property="titleLabel" destination="hq8-zl-voU" id="nME-kN-jvM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cKj-wD-fSL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1995.6521739130437" y="568.52678571428567"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="28T-Jh-5EM">
             <objects>

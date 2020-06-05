@@ -14,7 +14,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
 
     var cityService: CityProviderProtocol! // TODO:Evan these will go on the view model most likely
     let forecastService = ForecastService() // TODO:Evan inject
-    
+
     // TODO:Evan read/write to user defaults
     private var isHourly: Bool = false {
         didSet {
@@ -62,10 +62,26 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     @IBAction func citiesButtonAction(_ sender: Any) {
-        if let viewController = UIStoryboard(name: "Main", bundle: .main).instantiateViewController(withIdentifier: "CityListViewController") as? CityListViewController {
+        navigateToCities()
+    }
+    
+    // MARK: - Navigation
+    
+    func navigateToCities() {
+        let id = "CityListViewController"
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: id) as? CityListViewController {
             viewController.cityProvider = cityService
             viewController.delegate = self
             navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    func navigateToDetail(city: City) {
+        let id = "ForecastDetailViewController"
+        if let detailVC = storyboard?.instantiateViewController(identifier: id) as? ForecastDetailViewController {
+            detailVC.city = city
+            detailVC.forecastService = forecastService
+            navigationController?.pushViewController(detailVC, animated: true)
         }
     }
     
@@ -103,6 +119,11 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return isHourly ? HourlyForecastTableViewCell.preferredHeight : ForecastTableViewCell.preferredHeight
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let city = cityService.cities[indexPath.row]
+        navigateToDetail(city: city)
     }
     
     // MARK: - CityListViewControllerDelegate
