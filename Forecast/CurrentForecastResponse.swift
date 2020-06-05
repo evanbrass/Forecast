@@ -6,52 +6,6 @@
 //  Copyright © 2020 Evan Brass. All rights reserved.
 //
 
-/*
- {
-   "coord": {
-     "lon": -85.76,
-     "lat": 38.25
-   },
-   "weather": [
-     {
-       "id": 801,
-       "main": "Clouds",
-       "description": "few clouds",
-       "icon": "02d"
-     }
-   ],
-   "base": "stations",
-   "main": {
-     "temp": 304.59,
-     "feels_like": 300.55,
-     "temp_min": 303.71,
-     "temp_max": 305.37,
-     "pressure": 1017,
-     "humidity": 33
-   },
-   "visibility": 16093,
-   "wind": {
-     "speed": 7.2,
-     "deg": 260
-   },
-   "clouds": {
-     "all": 20
-   },
-   "dt": 1591127876,
-   "sys": {
-     "type": 1,
-     "id": 5801,
-     "country": "US",
-     "sunrise": 1591093265,
-     "sunset": 1591146090
-   },
-   "timezone": -14400,
-   "id": 4299276,
-   "name": "Louisville",
-   "cod": 200
- }
- */
-
 import Foundation
 import CoreLocation
 
@@ -87,7 +41,7 @@ struct WeatherInfo: Codable {
     }
 }
 
-// TODO:Evan remove
+// TODO:Evan remove and anything else here unused
 struct CurrentForecastResponse: Codable {
     let info: TemperatureInfo
     let cityName: String
@@ -127,8 +81,31 @@ struct CurrentTempInfo: Codable {
     }
 }
 
-// TODO:Evan can this be combined with current?  don't think so
 struct HourlyForecastResponse: Codable {
     let hourly: [HourlyTempInfo]
     let current: CurrentTempInfo
+    let timezoneOffset: Int
+    
+    private enum CodingKeys: String, CodingKey {
+        case hourly
+        case current
+        case timezoneOffset = "timezone_offset"
+    }
 }
+
+// TODO:Evan move
+func timeTextForTimeStamp(_ time: Int) -> String {
+    let date = Date(timeIntervalSince1970: Double(time))
+    let dateString = date.description
+    guard let firstComponent = dateString.split(separator: ":").first,
+        var hour = Int(String(firstComponent.suffix(2))) else {
+            return ""
+    }
+    var amPM = "AM"
+    if hour > 12 {
+        hour = hour % 12
+        amPM = "PM"
+    }
+    return "\(hour) \(amPM)"
+}
+

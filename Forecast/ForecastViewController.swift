@@ -24,6 +24,8 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // TODO:
         forecastService.clearCache()
         isHourly = UserDefaults.standard.bool(forKey: "isHourly")
         setupUI()

@@ -41,15 +41,9 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     }
 
     func configureWithForecast(_ forecast: HourlyForecastResponse) {
-        // Add little view for current
-        let currentInfoView = HourlyForecastInfoView(timeStamp: forecast.current.time,
-                                                     temp: forecast.current.temp,
-                                                     iconURL: forecast.current.weather.first?.iconURL)
-        forecastStack.addArrangedSubview(currentInfoView)
-        
         // Add hourly info views
-        for tempInfo in forecast.hourly.prefix(6) {
-            let infoView = HourlyForecastInfoView(timeStamp: tempInfo.time,
+        for tempInfo in forecast.hourly.prefix(7) {
+            let infoView = HourlyForecastInfoView(timeStamp: tempInfo.time + forecast.timezoneOffset,
                                                   temp: tempInfo.temp,
                                                   iconURL: tempInfo.weather.first?.iconURL)
             forecastStack.addArrangedSubview(infoView)
@@ -62,11 +56,10 @@ class HourlyForecastInfoView: UIView {
 
     init(timeStamp: Int, temp: Double, iconURL: URL?) {
         super.init(frame: .zero)
-
+        
         // Time Label:
-        // TODO:Evan determine time
         let label = UILabel(frame: .zero)
-        label.text = "12:34"
+        label.text = timeTextForTimeStamp(timeStamp)
         label.font = .thin(.small)
         label.textAlignment = .center
         label.minimumScaleFactor = 0.5
