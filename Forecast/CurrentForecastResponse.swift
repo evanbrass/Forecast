@@ -6,7 +6,7 @@
 //  Copyright © 2020 Evan Brass. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreLocation
 
 struct City: Codable, Equatable, Hashable {
@@ -35,9 +35,8 @@ struct WeatherInfo: Codable {
     let description: String
     let icon: String
     
-    var iconURL: URL? {
-        let urlString = "https://openweathermap.org/img/wn/\(icon)@2x.png"
-        return URL(string: urlString)
+    var image: UIImage? {
+        return UIImage(named: icon)
     }
 }
 

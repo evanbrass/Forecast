@@ -45,7 +45,7 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
         for tempInfo in forecast.hourly.prefix(7) {
             let infoView = HourlyForecastInfoView(timeStamp: tempInfo.time + forecast.timezoneOffset,
                                                   temp: tempInfo.temp,
-                                                  iconURL: tempInfo.weather.first?.iconURL)
+                                                  image: tempInfo.weather.first?.image)
             forecastStack.addArrangedSubview(infoView)
         }
     }
@@ -54,7 +54,7 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
 // TODO:Evan move
 class HourlyForecastInfoView: UIView {
 
-    init(timeStamp: Int, temp: Double, iconURL: URL?) {
+    init(timeStamp: Int, temp: Double, image: UIImage?) {
         super.init(frame: .zero)
         
         // Time Label:
@@ -68,7 +68,7 @@ class HourlyForecastInfoView: UIView {
         // ImageView
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFit
-        imageView.sd_setImage(with: iconURL, completed: nil)
+        imageView.image = image
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         // TempLabel

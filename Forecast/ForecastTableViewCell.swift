@@ -32,8 +32,8 @@ class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
 
     func configureWithForecast(_ forecast: HourlyForecastResponse) {
         temperatureLabel.text = "\(Int(forecast.current.temp))"
-        // TODO:Evan need a function to determine weather it's daytime or nightime in city
-        iconImageView.sd_setImage(with: forecast.current.weather.first?.iconURL, completed: nil)
+        iconImageView.image = forecast.current.weather.first?.image
+//        iconImageView.sd_setImage(with: forecast.current.weather.first?.iconURL, completed: nil)
     }
 
     override func prepareForReuse() {
