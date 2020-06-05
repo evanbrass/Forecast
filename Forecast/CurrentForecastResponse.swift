@@ -96,5 +96,38 @@ struct CurrentForecastResponse: Codable {
         case cityName = "name"
         case weather
     }
+}
 
+struct HourlyTempInfo: Codable {
+    let time: Int
+    let temp: Double
+    let weather: [WeatherInfo]
+    
+    private enum CodingKeys: String, CodingKey {
+        case time = "dt"
+        case temp
+        case weather
+    }
+}
+
+struct CurrentTempInfo: Codable {
+    let temp: Double
+    let time: Int
+    let sunrise: Int
+    let sunset: Int
+    let weather: [WeatherInfo]
+    
+    private enum CodingKeys: String, CodingKey {
+        case temp
+        case time = "dt"
+        case sunrise
+        case sunset
+        case weather
+    }
+}
+
+// TODO:Evan can this be combined with current?  don't think so
+struct HourlyForecastResponse: Codable {
+    let hourly: [HourlyTempInfo]
+    let current: CurrentTempInfo
 }

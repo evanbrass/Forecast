@@ -48,27 +48,30 @@
                                         </constraints>
                                     </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rws-G7-0n5">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="694"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="664"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </tableView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="lmU-gl-ubd">
-                                        <rect key="frame" x="0.0" y="744" width="414" height="30"/>
+                                        <rect key="frame" x="0.0" y="714" width="414" height="60"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C84-wO-oBb">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="207" height="60"/>
                                                 <state key="normal" title="Current"/>
                                                 <connections>
-                                                    <action selector="currentButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cLI-ft-5zs"/>
+                                                    <action selector="toggleHourlyAction" destination="BYZ-38-t0r" eventType="touchUpInside" id="jsE-Mh-UBs"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMa-l4-oJZ">
-                                                <rect key="frame" x="207" y="0.0" width="207" height="30"/>
+                                                <rect key="frame" x="207" y="0.0" width="207" height="60"/>
                                                 <state key="normal" title="Hourly"/>
                                                 <connections>
-                                                    <action selector="hourlyButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eCU-dr-haZ"/>
+                                                    <action selector="toggleHourlyAction" destination="BYZ-38-t0r" eventType="touchUpInside" id="3FL-Jy-P9w"/>
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="kPH-g2-GDc"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
@@ -84,6 +87,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="ZX6-7I-S5O"/>
                     <connections>
+                        <outlet property="currentButton" destination="C84-wO-oBb" id="ahH-fX-Y7I"/>
+                        <outlet property="hourlyButton" destination="cMa-l4-oJZ" id="aGI-lc-JDI"/>
                         <outlet property="tableView" destination="Rws-G7-0n5" id="rUe-nk-3Tp"/>
                     </connections>
                 </viewController>

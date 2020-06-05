@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class ForecastTableViewCell: UITableViewCell {
+class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     static let preferredHeight: CGFloat = 80
     static let reuseID = "ForecastTableViewCell"
 
@@ -17,7 +17,7 @@ class ForecastTableViewCell: UITableViewCell {
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var hStack: UIStackView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setup()
@@ -29,26 +29,13 @@ class ForecastTableViewCell: UITableViewCell {
         hStack.isLayoutMarginsRelativeArrangement = true
         hStack.layoutMargins = cellMargins
     }
-    
-    // TODO:Evan change to viewModel?
-    func configureWithCity(city: City, forecastService: ForecastService) {
-        cityNameLabel.text = "\(city.name)  "
-        forecastService.getCurrentForecastForCity(city) { [weak self] (forecast, error) in
-            guard error == nil else {
-                // TODO:Evan handle
-                assertionFailure()
-                return
-            }
-            if let temp = forecast?.info.temp {
-                DispatchQueue.main.async {
-                    self?.temperatureLabel.text = "\(Int(temp))"
-                    // TODO:Evan need a function to determine weather it's daytime or nightime in city
-                    self?.iconImageView.sd_setImage(with: forecast?.weather.first?.iconURL, completed: nil)
-                }
-            }
-        }
+
+    func configureWithForecast(_ forecast: HourlyForecastResponse) {
+        temperatureLabel.text = "\(Int(forecast.current.temp))"
+        // TODO:Evan need a function to determine weather it's daytime or nightime in city
+        iconImageView.sd_setImage(with: forecast.current.weather.first?.iconURL, completed: nil)
     }
-    
+
     override func prepareForReuse() {
         // TODO:Evan Cancel download task
         temperatureLabel.text = nil

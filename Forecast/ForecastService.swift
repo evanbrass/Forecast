@@ -9,6 +9,7 @@
 import Foundation
 
 typealias GetCurrentForecastCompletion = (CurrentForecastResponse?, Error?) -> ()
+typealias GetHourlyForecastCompletion = (HourlyForecastResponse?, Error?) -> ()
 
 enum TempUnit: String {
     case fahrenheit = "imperial"
@@ -18,6 +19,67 @@ enum TempUnit: String {
 class ForecastService {
     let appID = "5d7687b3c7704da50b6b4a7ae278329f" // API Key
     let tempUnit: TempUnit = .fahrenheit // TODO:Evan make this changeable
+    
+    /*
+    https://api.openweathermap.org/data/2.5/onecall?lat=\(city.lat)&lon=\(city.lon)&exclude={part}
+    https://api.openweathermap.org/data/2.5/onecall?lat=\(city.lat)&lon=\(city.lon)&appid=\(appID)
+     
+     parts can exclude:
+     current
+     minutely
+     hourly
+     daily
+ */
+    
+    func clearCache() {
+        URLCache.shared.removeAllCachedResponses()
+    }
+
+    func getHourlyForecastForCity(_ city: City, completion: @escaping GetHourlyForecastCompletion) {
+        let urlString = "https://api.openweathermap.org/data/2.5/onecall?lat=\(city.lat)&lon=\(city.lon)&exclude=minutely,daily&appid=\(appID)&units=\(tempUnit.rawValue)"
+        guard let url = URL(string: urlString) else {
+            // TODO:Evan throw exception that we failed because of bad url
+            assertionFailure("This shouldn't happen, something wrong with the id")
+            return
+        }
+        
+        // Cache
+        if let cached = URLCache.shared.cachedResponse(for: URLRequest(url: url)) {
+            do {
+                let decodedData = try JSONDecoder().decode(HourlyForecastResponse.self, from: cached.data)
+                completion(decodedData, nil)
+            } catch let error {
+                // TODO:evan re-fetch
+                print(error.localizedDescription)
+                completion(nil, error)
+            }
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard error == nil else {
+                // TODO:Evan handle
+                assertionFailure(error!.localizedDescription)
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let forecast = try JSONDecoder().decode(HourlyForecastResponse.self, from: data)
+                    completion(forecast, nil)
+                } catch let error {
+                    // TODO:evan custom error
+                    print(error.localizedDescription)
+                    completion(nil, error)
+                }
+            } else {
+                // TODO:Evan handle
+                print("something went wrong, there's no data")
+                assertionFailure()
+            }
+        }.resume()
+        
+    }
 
     func getCurrentForecastForCity(_ city: City, completion: @escaping GetCurrentForecastCompletion) {
         // TODO:Evan make this a function to return a URL
