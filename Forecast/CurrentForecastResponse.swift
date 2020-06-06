@@ -101,7 +101,11 @@ func timeTextForTimeStamp(_ time: Int) -> String {
             return ""
     }
     var amPM = "AM"
-    if hour > 12 {
+    if hour == 0 {
+        hour = 12
+    } else if hour == 12 {
+        amPM = "PM"
+    } else if hour > 12 {
         hour = hour % 12
         amPM = "PM"
     }

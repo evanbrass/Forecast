@@ -33,6 +33,7 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     }
     
     func setup() {
+        selectionStyle = .none
         mainStack.isLayoutMarginsRelativeArrangement = true
         mainStack.layoutMargins = cellMargins
         cityNameLabel.font = .light(.large)
@@ -53,32 +54,32 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
 
 // TODO:Evan move
 class HourlyForecastInfoView: UIView {
+    var timeLabel = UILabel(frame: .zero)
+    var imageView = UIImageView(frame: .zero)
+    var tempLabel = UILabel(frame: .zero)
 
     init(timeStamp: Int, temp: Double, image: UIImage?) {
         super.init(frame: .zero)
         
         // Time Label:
-        let label = UILabel(frame: .zero)
-        label.text = timeTextForTimeStamp(timeStamp)
-        label.font = .thin(.small)
-        label.textAlignment = .center
-        label.minimumScaleFactor = 0.5
-        label.adjustsFontSizeToFitWidth = true
+        timeLabel.text = timeTextForTimeStamp(timeStamp)
+        timeLabel.font = .thin(.small)
+        timeLabel.textAlignment = .center
+        timeLabel.minimumScaleFactor = 0.5
+        timeLabel.adjustsFontSizeToFitWidth = true
 
         // ImageView
-        let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
         imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         // TempLabel
-        let tempLabel = UILabel(frame: .zero)
         tempLabel.text = "\(Int(temp))"
         tempLabel.font = .thin(.large)
         tempLabel.textAlignment = .center
 
         // Stack
-        let stack = UIStackView(arrangedSubviews: [label, imageView, tempLabel])
+        let stack = UIStackView(arrangedSubviews: [timeLabel, imageView, tempLabel])
         stack.axis = .vertical
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)

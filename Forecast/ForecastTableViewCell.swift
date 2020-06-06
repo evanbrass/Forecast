@@ -21,8 +21,9 @@ class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
         super.awakeFromNib()
         setup()
     }
-
+    
     private func setup() {
+        selectionStyle = .none
         cityNameLabel.font = .thin(.title)
         temperatureLabel.font = .thin(.title)
         hStack.isLayoutMarginsRelativeArrangement = true

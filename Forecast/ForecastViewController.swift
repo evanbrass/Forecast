@@ -15,7 +15,6 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     var cityService: CityProviderProtocol! // TODO:Evan these will go on the view model most likely
     let forecastService = ForecastService() // TODO:Evan inject
 
-    // TODO:Evan read/write to user defaults
     private var isHourly: Bool = false {
         didSet {
             UserDefaults.standard.set(isHourly, forKey: "isHourly")
