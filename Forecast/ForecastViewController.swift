@@ -11,10 +11,12 @@ import UIKit
 class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityListViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-
-    var cityService: CityProviderProtocol! // TODO:Evan these will go on the view model most likely
-    let forecastService = ForecastService() // TODO:Evan inject
-
+    
+    /// Injected
+    var cityProvider: CityProviderProtocol!
+    var forecastService: ForecastServiceProtocol!
+    
+    private let refreshControl = UIRefreshControl()
     private var isHourly: Bool = false {
         didSet {
             UserDefaults.standard.set(isHourly, forKey: "isHourly")
@@ -23,9 +25,6 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO:
-        forecastService.clearCache()
         isHourly = UserDefaults.standard.bool(forKey: "isHourly")
         setupUI()
     }
@@ -37,7 +36,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
 
     private func setupUI() {
         navigationController?.navigationBar.isHidden = true
-        // TODO:Evan make strings constants
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.light()], for: .normal)
         
         // TableView
         tableView.register(UINib(nibName: "ForecastTableViewCell", bundle: .main),
@@ -46,6 +45,11 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
                            forCellReuseIdentifier: HourlyForecastTableViewCell.reuseID)
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // Refresh Control
+        refreshControl.attributedTitle = NSAttributedString(string: "Refresh Data")
+        refreshControl.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     private func refreshUI() {
@@ -69,7 +73,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     func navigateToCities() {
         let id = "CityListViewController"
         if let viewController = storyboard?.instantiateViewController(withIdentifier: id) as? CityListViewController {
-            viewController.cityProvider = cityService
+            viewController.cityProvider = cityProvider
             viewController.delegate = self
             navigationController?.pushViewController(viewController, animated: true)
         }
@@ -84,16 +88,24 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    @objc private func pullToRefresh(_ sender: AnyObject) {
+        forecastService.clearCache()
+        refreshUI()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
     // MARK: - UITableViewDelegate / DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cityService.cities.count
+        return cityProvider.cities.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let id = isHourly ? HourlyForecastTableViewCell.reuseID : ForecastTableViewCell.reuseID
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ForecastConfigurable
-        let city = cityService.cities[indexPath.row]
+        let city = cityProvider.cities[indexPath.row]
         cell.cityNameLabel.text = city.name
         
         forecastService.getHourlyForecastForCity(city) {(forecast, error) in
@@ -105,14 +117,12 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
                 // TODO:Evan handle
                 return
             }
-            // store in memory
             DispatchQueue.main.async {
                 if let visible = tableView.indexPathsForVisibleRows, visible.contains(indexPath) {
                     cell.configureWithForecast(forecast)
                 }
             }
         }
-        
         return cell
     }
 
@@ -121,14 +131,14 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let city = cityService.cities[indexPath.row]
+        let city = cityProvider.cities[indexPath.row]
         navigateToDetail(city: city)
     }
     
     // MARK: - CityListViewControllerDelegate
     
-    func cityListViewControllerDidFinish(dataService: CityProviderProtocol) {
-        self.cityService = dataService
+    func cityListViewControllerDidFinish(cityProvider: CityProviderProtocol) {
+        self.cityProvider = cityProvider
         refreshUI()
     }
 }

@@ -111,8 +111,8 @@
                                     <action selector="backButtonAction:" destination="x2Y-uG-Hw3" eventType="touchUpInside" id="5Dp-MG-iUM"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yKK-yb-tIv">
-                                <rect key="frame" x="0.0" y="89" width="414" height="141.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="yKK-yb-tIv">
+                                <rect key="frame" x="0.0" y="149" width="414" height="189.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hq8-zl-voU" userLabel="Title Label">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
@@ -121,19 +121,19 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rk1-YD-XHy">
-                                        <rect key="frame" x="0.0" y="20.5" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="36.5" width="414" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjn-yV-s7i">
-                                        <rect key="frame" x="0.0" y="41" width="414" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="73" width="414" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="DyY-XA-CGo">
-                                        <rect key="frame" x="0.0" y="61.5" width="414" height="80"/>
+                                        <rect key="frame" x="0.0" y="109.5" width="414" height="80"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="n1H-WB-0bv"/>
@@ -163,7 +163,7 @@
                             <constraint firstItem="cuR-NL-Odf" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="yKK-yb-tIv" secondAttribute="bottom" id="N63-Ir-aCI"/>
                             <constraint firstItem="SHA-D2-mGW" firstAttribute="top" secondItem="cuR-NL-Odf" secondAttribute="top" id="QgB-mJ-Dih"/>
                             <constraint firstItem="SHA-D2-mGW" firstAttribute="leading" secondItem="cuR-NL-Odf" secondAttribute="leading" constant="16" id="YgF-b8-KVF"/>
-                            <constraint firstItem="yKK-yb-tIv" firstAttribute="top" secondItem="SHA-D2-mGW" secondAttribute="bottom" id="au5-UC-ehl"/>
+                            <constraint firstItem="yKK-yb-tIv" firstAttribute="top" secondItem="SHA-D2-mGW" secondAttribute="bottom" constant="60" id="au5-UC-ehl"/>
                             <constraint firstItem="cuR-NL-Odf" firstAttribute="trailing" secondItem="yKK-yb-tIv" secondAttribute="trailing" id="xme-fk-hLY"/>
                             <constraint firstItem="yKK-yb-tIv" firstAttribute="leading" secondItem="cuR-NL-Odf" secondAttribute="leading" id="zTf-rq-6tk"/>
                         </constraints>

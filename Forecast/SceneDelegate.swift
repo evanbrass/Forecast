@@ -21,12 +21,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
 
+        // Setup Forecast View Controller
         let storyBoard = UIStoryboard(name: "Main", bundle: .main)
         let id = "ForecastViewController"
         guard let rootVC = storyBoard.instantiateViewController(identifier: id) as? ForecastViewController else {
             return
         }
-        rootVC.cityService = CitiesProvider()
+        
+        // Inject city service
+        rootVC.cityProvider = CitiesProvider()
+        
+        // Inject forecast service and clear it's cache
+        let forecastService = ForecastService()
+        forecastService.clearCache()
+        rootVC.forecastService = forecastService
+        
         let rootNC = UINavigationController(rootViewController: rootVC)
         self.window?.rootViewController = rootNC
         self.window?.makeKeyAndVisible()

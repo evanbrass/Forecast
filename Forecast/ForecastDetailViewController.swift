@@ -47,7 +47,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
 class ForecastDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     // Explicity unwrapping these so we crash if we forgot to inject them
     var city: City!
-    var forecastService: ForecastService!
+    var forecastService: ForecastServiceProtocol!
     private var forecast: HourlyForecastResponse?
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!

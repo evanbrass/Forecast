@@ -9,7 +9,7 @@
 import UIKit
 
 enum FontSize: Int {
-    case yuge = 100
+    case yuge = 120
     case title = 28
     case large = 18
     case medium = 14

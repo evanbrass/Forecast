@@ -15,6 +15,7 @@ protocol CityProviderProtocol {
     func deleteCity(_ city: City)
 }
 
+// TODO: Evan Document, clean up
 class CitiesProvider: CityProviderProtocol {
     private(set) var cities: [City] = [
         City(name: "Louisville", state: "KY", lat: 38.25, lon: -85.76)

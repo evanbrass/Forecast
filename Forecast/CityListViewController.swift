@@ -10,59 +10,54 @@ import UIKit
 import GooglePlaces
 
 protocol CityListViewControllerDelegate: class {
-    // TODO:Evan return protocol
-    func cityListViewControllerDidFinish(dataService: CityProviderProtocol)
+    func cityListViewControllerDidFinish(cityProvider: CityProviderProtocol)
 }
 
 class CityListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var cityProvider: CityProviderProtocol! // TODO:Evan inject
+    var cityProvider: CityProviderProtocol!
     weak var delegate: CityListViewControllerDelegate?
-    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupUI()
     }
     
-    func setup() {
+    private func setupUI() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "ForecastTableViewCell", bundle: .main),
                            forCellReuseIdentifier: ForecastTableViewCell.reuseID)
     }
-    
 
-    // Present the Autocomplete view controller when the button is pressed.
-    func autocompleteClicked() {
+    private func presentGooglePlacesViewController() {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
         
         // Specify the place data types to return.
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.name.rawValue) |
-                                                         UInt(GMSPlaceField.placeID.rawValue) |
-                                                        UInt(GMSPlaceField.addressComponents.rawValue) |
-            UInt(GMSPlaceField.coordinate.rawValue))!
+                                                            UInt(GMSPlaceField.placeID.rawValue) |
+                                                            UInt(GMSPlaceField.addressComponents.rawValue) |
+                                                            UInt(GMSPlaceField.coordinate.rawValue) )!
         autocompleteController.placeFields = fields
         
-        // Specify a filter.
+        // Filter on cities
         let filter = GMSAutocompleteFilter()
         filter.type = .city
         autocompleteController.autocompleteFilter = filter
         
-        // Display the autocomplete view controller.
         present(autocompleteController, animated: true, completion: nil)
     }
-    
+
     // MARK: - Actions
     
     @IBAction func addCityButtonAction(_ sender: Any) {
-        autocompleteClicked()
+        presentGooglePlacesViewController()
     }
     
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
-        delegate?.cityListViewControllerDidFinish(dataService: cityProvider)
+        delegate?.cityListViewControllerDidFinish(cityProvider: cityProvider)
     }
     
     // MARK: - UITableViewDelegate / DataSource
@@ -72,7 +67,8 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ForecastTableViewCell.reuseID, for: indexPath) as! ForecastTableViewCell
+        let id = ForecastTableViewCell.reuseID
+        let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ForecastTableViewCell
         let city = cityProvider.cities[indexPath.row]
         cell.cityNameLabel?.text = "\(city.name), \(city.state ?? "")"
         return cell
@@ -92,42 +88,23 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
 }
 
 extension CityListViewController: GMSAutocompleteViewControllerDelegate {
-    
-    // TODO:Evan in a business rules class?
-    func stateCodeForPlace(_ place: GMSPlace) -> String? {
-        var code: String? = nil
-        
-        if let components = place.addressComponents, components.count > 0 {
-            if let state = components.first(where: { $0.types.contains(kGMSPlaceTypeAdministrativeAreaLevel1)}) {
-                code = state.shortName ?? state.name
-            } else if let country = components.first(where: { $0.types.contains(kGMSPlaceTypeCountry)}) {
-                code = country.shortName ?? country.name
-            } else {
-                code = components.last?.shortName ?? components.last?.name
-            }
-        }
-        return code
-    }
-    
-    // Handle the user's selection.
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let newCity = City(name: place.name ?? "unknown",
                            state: stateCodeForPlace(place),
                            lat:place.coordinate.latitude,
                            lon: place.coordinate.longitude)
         if !cityProvider.addCity(newCity) {
-            // TODO:Evan warn user it's already added, possible not dismiss, so they can keep searching??
+            // We could warn the user at this point that the city has already been added
         }
         tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        // TODO: handle the error.
+        // In a real world setting we would want to handle this error by presenting some feedback to the user
         print("Error: ", error.localizedDescription)
     }
     
-    // User canceled the operation.
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
     }
