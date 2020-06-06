@@ -70,7 +70,7 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
         let id = ForecastTableViewCell.reuseID
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ForecastTableViewCell
         let city = cityProvider.cities[indexPath.row]
-        cell.cityNameLabel?.text = "\(city.name), \(city.state ?? "")"
+        cell.setCityName("\(city.name), \(city.state ?? "")")
         return cell
     }
     

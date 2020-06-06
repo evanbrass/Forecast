@@ -106,7 +106,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         let id = isHourly ? HourlyForecastTableViewCell.reuseID : ForecastTableViewCell.reuseID
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) as! ForecastConfigurable
         let city = cityProvider.cities[indexPath.row]
-        cell.cityNameLabel.text = city.name
+        cell.setCityName(city.name)
         
         forecastService.getHourlyForecastForCity(city) {(forecast, error) in
             guard error == nil else {

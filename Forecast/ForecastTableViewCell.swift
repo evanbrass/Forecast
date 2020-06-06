@@ -12,10 +12,10 @@ class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     static let preferredHeight: CGFloat = 80
     static let reuseID = "ForecastTableViewCell"
 
-    @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var hStack: UIStackView!
+    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private weak var cityNameLabel: UILabel!
+    @IBOutlet private weak var temperatureLabel: UILabel!
+    @IBOutlet private weak var hStack: UIStackView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +28,10 @@ class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
         temperatureLabel.font = .thin(.title)
         hStack.isLayoutMarginsRelativeArrangement = true
         hStack.layoutMargins = cellMargins
+    }
+    
+    func setCityName(_ name: String?) {
+        cityNameLabel.text = name
     }
 
     func configureWithForecast(_ forecast: HourlyForecastResponse) {

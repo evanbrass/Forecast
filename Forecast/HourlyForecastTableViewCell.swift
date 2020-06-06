@@ -8,22 +8,22 @@
 
 import UIKit
 
-// TODO:Evan move somewhere else?
+/// Describes behavior of a tableview cell which can be configured
 protocol ForecastConfigurable: UITableViewCell {
-    var cityNameLabel: UILabel! { get set }
+    func setCityName(_ name: String?)
     func configureWithForecast(_ forecast: HourlyForecastResponse)
 }
 
 class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     static let reuseID = "HourlyForecastTableViewCell"
     static let preferredHeight: CGFloat = 120
-    @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var forecastStack: UIStackView!
-    @IBOutlet weak var mainStack: UIStackView!
+    @IBOutlet private weak var cityNameLabel: UILabel!
+    @IBOutlet private weak var forecastStack: UIStackView!
+    @IBOutlet private weak var mainStack: UIStackView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setup()
+        setupUI()
     }
 
     override func prepareForReuse() {
@@ -32,7 +32,7 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
         }
     }
     
-    func setup() {
+    private func setupUI() {
         selectionStyle = .none
         mainStack.isLayoutMarginsRelativeArrangement = true
         mainStack.layoutMargins = cellMargins
@@ -40,8 +40,15 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
         forecastStack.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.6).isActive = true
         forecastStack.distribution = .fillEqually
     }
+    
+    func setCityName(_ name: String?) {
+        cityNameLabel.text = name
+    }
 
     func configureWithForecast(_ forecast: HourlyForecastResponse) {
+        guard forecastStack.arrangedSubviews.isEmpty else {
+            return
+        }
         // Add hourly info views
         for tempInfo in forecast.hourly.prefix(7) {
             let infoView = HourlyForecastInfoView(timeStamp: tempInfo.time + forecast.timezoneOffset,
