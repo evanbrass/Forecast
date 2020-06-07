@@ -8,13 +8,18 @@
 
 import UIKit
 
-struct WeatherInfo: Codable {
-    let main: String
-    let description: String
-    let icon: String
+/// This file contains the codable response objects returned by the forecast api.  Since they are small, I kept them
+/// in one place instead of creating separate files for each.
+
+struct HourlyForecastResponse: Codable {
+    let hourly: [HourlyTempInfo]
+    let current: CurrentTempInfo
+    let timezoneOffset: Int
     
-    var image: UIImage? {
-        return UIImage(named: icon)
+    private enum CodingKeys: String, CodingKey {
+        case hourly
+        case current
+        case timezoneOffset = "timezone_offset"
     }
 }
 
@@ -46,14 +51,12 @@ struct CurrentTempInfo: Codable {
     }
 }
 
-struct HourlyForecastResponse: Codable {
-    let hourly: [HourlyTempInfo]
-    let current: CurrentTempInfo
-    let timezoneOffset: Int
+struct WeatherInfo: Codable {
+    let main: String
+    let description: String
+    let icon: String
     
-    private enum CodingKeys: String, CodingKey {
-        case hourly
-        case current
-        case timezoneOffset = "timezone_offset"
+    var image: UIImage? {
+        return UIImage(named: icon)
     }
 }

@@ -9,10 +9,15 @@
 import UIKit
 import GooglePlaces
 
+/// A simple protocol for the delegate of the CityListViewController class
 protocol CityListViewControllerDelegate: class {
+    /// Fired when the `CityListViewController` is finished and passes back a city provider.
     func cityListViewControllerDidFinish(cityProvider: CityProviderProtocol)
 }
 
+/// The purpose of this class is to display a list of cities that the app is using.  Within this view controller we can
+/// edit the city list by adding cities or swiping left to delete a city.  With more time it would be cool to update
+/// this to include re-ordering of the cities.
 class CityListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var cityProvider: CityProviderProtocol!
     weak var delegate: CityListViewControllerDelegate?

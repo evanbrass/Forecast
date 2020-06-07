@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     static let preferredHeight: CGFloat = 80
     static let reuseID = "ForecastTableViewCell"

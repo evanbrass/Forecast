@@ -9,6 +9,12 @@
 import UIKit
 
 // TODO:Evan document
+
+/// This view controller is responsible for displaying forecast data for all the available cities.
+/// The `cityProvider` and `forecastService` are 2 objects that must be injected to this class.
+/// There are 2 display modes, current and hourly (controlled by the `isHourly` property)
+/// In "current" mode we only show the current temperature and condition for the city.
+/// In "hourly" mode we show the temp and condition for the next 7 hours.
 class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityListViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
