@@ -48,6 +48,14 @@ class CityListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         present(autocompleteController, animated: true, completion: nil)
     }
+    
+    private func addCity(_ city: City) {
+        guard cityProvider.addCity(city) else {
+            return
+        }
+        tableView.reloadData()
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+    }
 
     // MARK: - Actions
     
@@ -93,10 +101,7 @@ extension CityListViewController: GMSAutocompleteViewControllerDelegate {
                            state: stateCodeForPlace(place),
                            lat:place.coordinate.latitude,
                            lon: place.coordinate.longitude)
-        if !cityProvider.addCity(newCity) {
-            // We could warn the user at this point that the city has already been added
-        }
-        tableView.reloadData()
+        addCity(newCity)
         dismiss(animated: true, completion: nil)
     }
     

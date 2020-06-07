@@ -43,18 +43,12 @@ class CitiesProvider: CityProviderProtocol {
             cityHash = Set(cities)
         }
     }
-    
-    func saveData() {
-        if let data = try? JSONEncoder().encode(cities) {
-            UserDefaults.standard.set(data, forKey: defaultsCityKey)
-        }
-    }
-    
+
     func addCity(_ city: City) -> Bool {
         guard !cityHash.contains(city) else {
             return false
         }
-        cities.append(city)
+        cities.insert(city, at: 0)
         cityHash.insert(city)
         saveData()
         return true
@@ -66,5 +60,11 @@ class CitiesProvider: CityProviderProtocol {
             cities.remove(at: removeIndex)
         }
         saveData()
+    }
+
+    private func saveData() {
+        if let data = try? JSONEncoder().encode(cities) {
+            UserDefaults.standard.set(data, forKey: defaultsCityKey)
+        }
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// TODO:Evan document
 class ForecastViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CityListViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -36,7 +37,7 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
 
     private func setupUI() {
         navigationController?.navigationBar.isHidden = true
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.light()], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.font : UIFont.light(.medium)], for: .normal)
         
         // TableView
         tableView.register(UINib(nibName: "ForecastTableViewCell", bundle: .main),
@@ -109,18 +110,12 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         cell.setCityName(city.name)
         
         forecastService.getHourlyForecastForCity(city) {(forecast, error) in
-            guard error == nil else {
-                // TODO:Evan handle
-                return
-            }
-            guard let forecast = forecast else {
-                // TODO:Evan handle
+            guard error == nil, let forecast = forecast else {
+                // We could choose to handle this in a number of ways, but for now, just forgo populating weather data
                 return
             }
             DispatchQueue.main.async {
-                if let visible = tableView.indexPathsForVisibleRows, visible.contains(indexPath) {
-                    cell.configureWithForecast(forecast)
-                }
+                cell.configureWithForecast(forecast)
             }
         }
         return cell

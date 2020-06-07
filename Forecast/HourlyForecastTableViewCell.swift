@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// Describes behavior of a tableview cell which can be configured
+/// Describes behavior of a tableview cell which can be configured with a city name and forecast
 protocol ForecastConfigurable: UITableViewCell {
     func setCityName(_ name: String?)
     func configureWithForecast(_ forecast: HourlyForecastResponse)
@@ -27,6 +27,10 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     }
 
     override func prepareForReuse() {
+        resetUI()
+    }
+    
+    private func resetUI() {
         for subView in forecastStack.arrangedSubviews {
             subView.removeFromSuperview()
         }
@@ -46,9 +50,10 @@ class HourlyForecastTableViewCell: UITableViewCell, ForecastConfigurable {
     }
 
     func configureWithForecast(_ forecast: HourlyForecastResponse) {
-        guard forecastStack.arrangedSubviews.isEmpty else {
-            return
+        if !forecastStack.arrangedSubviews.isEmpty  {
+            resetUI()
         }
+        
         // Add hourly info views
         for tempInfo in forecast.hourly.prefix(7) {
             let infoView = HourlyForecastInfoView(timeStamp: tempInfo.time + forecast.timezoneOffset,
