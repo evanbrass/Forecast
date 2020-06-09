@@ -70,7 +70,7 @@ struct ForecastListView: View {
             }
             .navigationBarTitle("Forecasts")
             .navigationBarItems(trailing:
-                NavigationLink(destination: CityListView(), label: {
+                NavigationLink(destination: CityListView(citiesModel: CityListViewModel(cityProvider: cityProvider)), label: {
                     Text("Cities")
                 })
             )

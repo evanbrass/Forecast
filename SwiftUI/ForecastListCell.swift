@@ -18,7 +18,8 @@ struct ForecastListCell: View {
             HStack {
                 Text(cityName)
                     .scaleEffect(isHourly ? 0.5 : 1.0, anchor: .leading)
-                
+                    .lineLimit(1)
+
                 Spacer()
                 
                 if forecast != nil {

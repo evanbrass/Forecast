@@ -8,14 +8,52 @@
 
 import SwiftUI
 
-struct CityListView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+// TODO:Evan move
+class CityListViewModel: ObservableObject {
+    @Published var cities: [City] = []
+    private let cityProvider: CityProviderProtocol
+    
+    init(cityProvider: CityProviderProtocol) {
+        self.cityProvider = cityProvider
+        cities = cityProvider.cities
+    }
+    
+    func deleteCityAtIndex(_ index: Int) {
+        let city = cityProvider.cities[index]
+        cityProvider.deleteCity(city)
+        cities = cityProvider.cities
     }
 }
 
-struct CityListView_Previews: PreviewProvider {
-    static var previews: some View {
-        CityListView()
+struct CityListView: View {
+    @ObservedObject var citiesModel: CityListViewModel
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(citiesModel.cities, id: \.self) { (city) in
+                    Text(city.name)
+                        .frame(height: 60)
+                        .font(.title)
+                }
+                .onDelete { (indexSet) in
+                    for i in indexSet {
+                        self.citiesModel.deleteCityAtIndex(i)
+                    }
+                }
+            }
+        }
+        .navigationBarTitle("Cities")
+        .navigationBarItems(trailing:
+            NavigationLink(destination: Text("Add city"), label: {
+                Text("Add")
+            })
+        )
     }
 }
+
+//struct CityListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CityListView()
+//    }
+//}
