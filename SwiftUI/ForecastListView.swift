@@ -12,7 +12,7 @@ struct ForecastListView: View {
     private let cityProvider: CityProviderProtocol
     private let forecastService: ForecastServiceProtocol
     @State private var forecasts: [City: HourlyForecastResponse] = [:]
-    @State private var isHourly = true
+    @State private var isHourly = false // TODO:Evan update using userdefaults
 
     init(cityProvider: CityProviderProtocol, forecastService: ForecastServiceProtocol) {
         self.cityProvider = cityProvider

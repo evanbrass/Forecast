@@ -7,27 +7,13 @@
 //
 
 import SwiftUI
+import GooglePlaces
 
-// TODO:Evan move
-class CityListViewModel: ObservableObject {
-    @Published var cities: [City] = []
-    private let cityProvider: CityProviderProtocol
-    
-    init(cityProvider: CityProviderProtocol) {
-        self.cityProvider = cityProvider
-        cities = cityProvider.cities
-    }
-    
-    func deleteCityAtIndex(_ index: Int) {
-        let city = cityProvider.cities[index]
-        cityProvider.deleteCity(city)
-        cities = cityProvider.cities
-    }
-}
-
+// TODO:Evan document
 struct CityListView: View {
     @ObservedObject var citiesModel: CityListViewModel
-    
+    @State var x = false
+
     var body: some View {
         NavigationView {
             List {
@@ -45,15 +31,11 @@ struct CityListView: View {
         }
         .navigationBarTitle("Cities")
         .navigationBarItems(trailing:
-            NavigationLink(destination: Text("Add city"), label: {
-                Text("Add")
+            Button("Add") {
+                self.citiesModel.isShowingCityPicker.toggle()
+            }.sheet(isPresented: self.$citiesModel.isShowingCityPicker, content: {
+                GooglePlacesCityPickerView(delegate: self.citiesModel as GMSAutocompleteViewControllerDelegate)
             })
         )
     }
 }
-
-//struct CityListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CityListView()
-//    }
-//}

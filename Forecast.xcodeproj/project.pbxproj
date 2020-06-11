@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		09A924D038D6A41734DCEA67 /* Pods_Forecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29FA23786C7138A061A073FB /* Pods_Forecast.framework */; };
+		650BEDAB2491565A00CAB880 /* CityListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650BEDAA2491565A00CAB880 /* CityListViewModel.swift */; };
+		650BEDAD249156A100CAB880 /* GooglePlacesCityPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650BEDAC249156A100CAB880 /* GooglePlacesCityPickerView.swift */; };
 		6525B3E0248ECECE0077B8F1 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65FB4B76248D8CA600B4A612 /* WeatherCollectionViewCell.swift */; };
 		6525B3E1248ECECE0077B8F1 /* ForecastDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658B4551248B032600F24570 /* ForecastDetailViewController.swift */; };
 		6525B3E2248ECECE0077B8F1 /* ForecastService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6566F76F24886CB5001445D3 /* ForecastService.swift */; };
@@ -68,6 +70,8 @@
 
 /* Begin PBXFileReference section */
 		29FA23786C7138A061A073FB /* Pods_Forecast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Forecast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		650BEDAA2491565A00CAB880 /* CityListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityListViewModel.swift; sourceTree = "<group>"; };
+		650BEDAC249156A100CAB880 /* GooglePlacesCityPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesCityPickerView.swift; sourceTree = "<group>"; };
 		6525B3FB248ECECE0077B8F1 /* Forecast-SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Forecast-SwiftUI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6525B3FC248ECECE0077B8F1 /* Forecast copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Forecast copy-Info.plist"; path = "/Users/ebrass/Desktop/Forecast/Forecast copy-Info.plist"; sourceTree = "<absolute>"; };
 		6525B42B248ED06A0077B8F1 /* SceneDelegateSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegateSwiftUI.swift; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 				6525B42B248ED06A0077B8F1 /* SceneDelegateSwiftUI.swift */,
 				6525B430248ED1540077B8F1 /* ForecastListView.swift */,
 				65AB9C622490425500761AEC /* CityListView.swift */,
+				650BEDAA2491565A00CAB880 /* CityListViewModel.swift */,
+				650BEDAC249156A100CAB880 /* GooglePlacesCityPickerView.swift */,
 				65AB9C6024903FF300761AEC /* ForecastListCell.swift */,
 			);
 			path = SwiftUI;
@@ -501,6 +507,7 @@
 				6525B42C248ED06A0077B8F1 /* SceneDelegateSwiftUI.swift in Sources */,
 				6525B3E0248ECECE0077B8F1 /* WeatherCollectionViewCell.swift in Sources */,
 				6525B431248ED1540077B8F1 /* ForecastListView.swift in Sources */,
+				650BEDAB2491565A00CAB880 /* CityListViewModel.swift in Sources */,
 				6525B3E1248ECECE0077B8F1 /* ForecastDetailViewController.swift in Sources */,
 				6525B3E2248ECECE0077B8F1 /* ForecastService.swift in Sources */,
 				6525B3E3248ECECE0077B8F1 /* Styles.swift in Sources */,
@@ -513,6 +520,7 @@
 				6525B3EB248ECECE0077B8F1 /* ForecastTableViewCell.swift in Sources */,
 				65AB9C6124903FF300761AEC /* ForecastListCell.swift in Sources */,
 				6525B3EC248ECECE0077B8F1 /* PureFunctions.swift in Sources */,
+				650BEDAD249156A100CAB880 /* GooglePlacesCityPickerView.swift in Sources */,
 				65AB9C632490425500761AEC /* CityListView.swift in Sources */,
 				6525B3ED248ECECE0077B8F1 /* CitiesProvider.swift in Sources */,
 				6525B3EE248ECECE0077B8F1 /* ForecastViewController.swift in Sources */,
