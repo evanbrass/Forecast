@@ -1,15 +1,21 @@
 # Forecast
 
-## Developer Thoughts
-I coded this using typical Apple/MVC conventions, mainly because it's a small project, and I think MVC is well suited for that.  There are 2 main services in the app: `CitiesProvider` which manages the list of cities the user has selected and `ForecastService` which handles getting the forecast for the cities.  These services are injected into the view controllers which depend on them simply by property assignment. There are a few business logic methods extracted out into a separate file (`PureFunctions`) for ease of testing. 
+<img src="resources/demo.gif" width="300">
 
-On the topic of testing - There is no testing in this app, although I wrote the code with that in mind.  Creating protocols for the injected services will make them easy to be mocked.  Separating out the business logic to pure functions make those easy to test as well. 
+## Description
+
+This is a simple app that I am using to play around with SwiftUI.  It just shows weather forecast data for a list of cities. 
+It's still a work in progress, but feel free to clone and play around with it as you will.  
+
+There are 2 targets that you can choose from: Forecast and Forecast-SwiftUI.  The SwiftUI target will be the more up-to-date
+target, so I would suggest running with that.
+
 
 ## Future features / Nice to haves 
 - Create better UI to make things look cooler.  Custom icons for buttons instead of just text.  Cool backgrounds depending on weather conditions, slick animations throughout the app, etc. 
 - Robust error handling.  There is space for it in the code, I just didn't go down that road to far because of time constraints
 - Reordering of Cities on the city screen.
-- More details on the detail screen.
+- More details on the detail screen / SwiftUI detail screen.
 - Tests
 
 ## Dependencies
