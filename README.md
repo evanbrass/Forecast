@@ -1,6 +1,6 @@
 # Forecast
 
-<img src="resources/demo.gif" width="300">
+<!-- <img src="resources/demo.gif" width="300"> -->
 
 ## Description
 

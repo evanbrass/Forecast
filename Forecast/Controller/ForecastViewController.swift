@@ -115,6 +115,13 @@ class ForecastViewController: UIViewController, UITableViewDelegate, UITableView
         let city = cityProvider.cities[indexPath.row]
         cell.setCityName(city.name)
         
+        // Note 2 things:
+        // 1 - The ForecastService will use a cached response if it exists to avoid making the same call twice, so it
+        //     is fine to call `getHourlyForecaseForCity` many times for the same city as the data will already be
+        //     cached.
+        // 2 - With the free Open Weather API license, there is no batch downloading of data, so we have to fetch each
+        //     city's data one at a time.  Otherwise it would be nice to make 1 network call on app launch to save some
+        //     bandwidth and performance.
         forecastService.getHourlyForecastForCity(city) {(forecast, error) in
             guard error == nil, let forecast = forecast else {
                 // We could choose to handle this in a number of ways, but for now, just forgo populating weather data
