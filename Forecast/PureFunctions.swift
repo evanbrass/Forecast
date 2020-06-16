@@ -19,6 +19,13 @@ import GooglePlaces
 /// - Parameter time: The UTC timestamp
 /// - Returns: A string with the format "Hour {AM/PM}"
 func timeTextForTimeStamp(_ time: Int) -> String {
+    // TODO:
+    // There is a very simple way to get the hour from a date, using calendar components...
+    // however, whether it's a bug or user error (likely), it is not working for me and giving me an unexpted hour.
+    // For example, if I simply print the date, the hour is correct, but when using the Calendar component or even
+    // using date formatter... it's not returning the hour as expected... Even when I adjust for time zone. Anyway
+    // I will revisit this in the future to simplify this method, but in the meantime, I'm just going to reformat the
+    // date.description since it's giving me the result I want.
     let date = Date(timeIntervalSince1970: Double(time))
     let dateString = date.description
     guard let firstComponent = dateString.split(separator: ":").first,
