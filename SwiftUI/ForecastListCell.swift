@@ -9,25 +9,33 @@
 import SwiftUI
 
 struct ForecastListCell: View {
+    // TODO: don't know a better way to do this at the moment - tried various experiments with buggy results
+    // when trying to set the frame of the HStack below to always be the width of the parent view
+    // We have to use a geometry reader and pass it in... don't like this
+    // Was the only way to get the city name font to work properly with min scale factor.
+    let width: CGFloat
+    
     let cityName: String
     let isHourly: Bool
     var forecast: HourlyForecastResponse?
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Text(cityName)
-                    .scaleEffect(isHourly ? 0.5 : 1.0, anchor: .leading)
-                    .lineLimit(1)
+                    .animatableFont(size: isHourly ? 20 : 40)
+                    .minimumScaleFactor(0.2)
+                    .animation(Animation.easeInOut(duration: 0.2))
 
                 Spacer()
-                
+
                 if forecast != nil {
                     Text("\(Int(forecast!.current.temp))º")
                         .scaleEffect(isHourly ? 0.5 : 1.0, anchor: .trailing)
                         .opacity(isHourly ? 0 : 1.0)
                 }
             }
+            .frame(width: width, height: 40)
             .font(.largeTitle)
             .background(Color.white)
             .zIndex(10)
@@ -65,3 +73,4 @@ struct ForecastListCell: View {
         .frame(maxWidth: .infinity)
     }
 }
+

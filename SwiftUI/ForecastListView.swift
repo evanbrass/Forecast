@@ -42,7 +42,7 @@ struct ForecastListView: View {
                         }
                         .font(.callout)
                         .onTapGesture {
-                            withAnimation(Animation.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 0.5)) {
+                            withAnimation(Animation.spring(response: 0.4, dampingFraction: 0.75, blendDuration: 0.5)) {
                                 self.isHourly.toggle()
                             }
                         }
@@ -52,17 +52,19 @@ struct ForecastListView: View {
                 .background(Color.init(hue: 0.0, saturation: 0.0, brightness: 0.9))
 
                 // List
-                ScrollView {
-                    VStack {
-                        ForEach(cityProvider.cities, id: \.self) { (city) in
-                            ForecastListCell(cityName: city.name, isHourly: self.isHourly, forecast: self.forecasts[city])
-                                .padding()
-                                .onAppear {
-                                    self.forecastService.getHourlyForecastForCity(city) { (forecast, error) in
-                                        DispatchQueue.main.async {
-                                            self.forecasts[city] = forecast
+                GeometryReader { geo in
+                    ScrollView {
+                        VStack {
+                            ForEach(self.cityProvider.cities, id: \.self) { (city) in
+                                ForecastListCell(width: geo.size.width, cityName: city.name, isHourly: self.isHourly, forecast: self.forecasts[city])
+                                    .padding()
+                                    .onAppear {
+                                        self.forecastService.getHourlyForecastForCity(city) { (forecast, error) in
+                                            DispatchQueue.main.async {
+                                                self.forecasts[city] = forecast
+                                            }
                                         }
-                                    }
+                                }
                             }
                         }
                     }
